@@ -1,0 +1,77 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+void displayMenu() {
+    std::cout << "To-Do List Manager" << std::endl;
+    std::cout << "1. Add a task" << std::endl;
+    std::cout << "2. View tasks" << std::endl;
+    std::cout << "3. Delete a task" << std::endl;
+    std::cout << "4. Exit" << std::endl;
+    std::cout << "Choose an option: ";
+}
+
+void addTask(std::vector<std::string>& tasks) {
+    std::string task;
+    std::cout << "Enter the task: ";
+    std::cin.ignore();
+    std::getline(std::cin, task);
+    tasks.push_back(task);
+    std::cout << "Task added." << std::endl;
+}
+
+void viewTasks(const std::vector<std::string>& tasks) {
+    if (tasks.empty()) {
+        std::cout << "No tasks to display." << std::endl;
+    } else {
+        std::cout << "To-Do List:" << std::endl;
+        for (size_t i = 0; i < tasks.size(); ++i) {
+            std::cout << i + 1 << ". " << tasks[i] << std::endl;
+        }
+    }
+}
+
+void deleteTask(std::vector<std::string>& tasks) {
+    if (tasks.empty()) {
+        std::cout << "No tasks to delete." << std::endl;
+    } else {
+        int taskNumber;
+        std::cout << "Enter the task number to delete: ";
+        std::cin >> taskNumber;
+        if (taskNumber > 0 && taskNumber <= tasks.size()) {
+            tasks.erase(tasks.begin() + taskNumber - 1);
+            std::cout << "Task deleted." << std::endl;
+        } else {
+            std::cout << "Invalid task number." << std::endl;
+        }
+    }
+}
+
+int main() {
+    std::vector<std::string> tasks;
+    int choice;
+
+    do {
+        displayMenu();
+        std::cin >> choice;
+        switch(choice) {
+            case 1:
+                addTask(tasks);
+                break;
+            case 2:
+                viewTasks(tasks);
+                break;
+            case 3:
+                deleteTask(tasks);
+                break;
+            case 4:
+                std::cout << "Exiting..." << std::endl;
+                break;
+            default:
+                std::cout << "Invalid choice. Please try again." << std::endl;
+                break;
+        }
+    } while (choice != 4);
+
+    return 0;
+}
